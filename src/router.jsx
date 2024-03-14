@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
+import PrivateRoutes from "./component/PriveteRoute";
 import Search from "./component/Search";
 import Blog from "./pages/Blog";
 import CreateBlog from "./pages/CreateBlog";
@@ -25,11 +26,19 @@ const router = createBrowserRouter([
           },
           {
             path: "/create-blog",
-            element: <CreateBlog />,
+            element: (
+              <PrivateRoutes>
+                <CreateBlog />
+              </PrivateRoutes>
+            ),
           },
           {
             path: "/edit/:blogId",
-            element: <CreateBlog />,
+            element: (
+              <PrivateRoutes>
+                <CreateBlog />
+              </PrivateRoutes>
+            ),
           },
           {
             path: "/login",
@@ -41,7 +50,11 @@ const router = createBrowserRouter([
           },
           {
             path: "/profile/:authorId",
-            element: <Profile />,
+            element: (
+              <PrivateRoutes>
+                <Profile />
+              </PrivateRoutes>
+            ),
           },
           {
             path: "/search",

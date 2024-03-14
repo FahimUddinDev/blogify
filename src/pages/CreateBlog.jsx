@@ -89,7 +89,6 @@ function CreateBlog() {
       });
     }
   };
-  console.log(oldImg);
 
   return (
     <form className="createBlog" onSubmit={handleSubmit(submitForm)}>

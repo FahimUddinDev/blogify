@@ -29,27 +29,29 @@ const useAxios = () => {
         // it means the token has expired and we need to refresh it
         if (error.response.status === 401 && !originalRequest._retry) {
           originalRequest._retry = true;
-          try {
-            const refreshToken = auth?.refreshToken;
-            const response = await axios.post(
+
+          const refreshToken = auth?.refreshToken;
+          const response = await axios
+            .post(
               `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
               { refreshToken }
-            );
-            const { token } = response.data;
-
-            console.log(`New Token: ${token}`);
-            setAuth({ ...auth, authToken: token });
-            localStorage.setItem(
-              "authData",
-              JSON.stringify({ ...auth, authToken: token })
-            );
-
-            // Retry the original request with the new token
-            originalRequest.headers.Authorization = `Bearer ${token}`;
-            return axios(originalRequest);
-          } catch (error) {
-            throw error;
-          }
+            )
+            .then((response) => {
+              const { token } = response.data;
+              console.log(`New Token: ${token}`);
+              setAuth({ ...auth, authToken: token });
+              localStorage.setItem(
+                "authData",
+                JSON.stringify({ ...auth, authToken: token })
+              );
+            })
+            .catch((error) => {
+              localStorage.removeItem("authData");
+              throw error;
+            });
+          // Retry the original request with the new token
+          originalRequest.headers.Authorization = `Bearer ${token}`;
+          return axios(originalRequest);
         }
 
         return Promise.reject(error);

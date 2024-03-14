@@ -14,7 +14,7 @@ function Navbar() {
     const authData = JSON.parse(localStorage.getItem("authData"));
     setAuth(authData);
   }, []);
-  console.log(searchModal);
+
   return (
     <header>
       <nav className="container">

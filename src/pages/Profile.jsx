@@ -85,7 +85,7 @@ function Profile() {
       // }
     }
   };
-  console.log(previewAvatar);
+
   return (
     <div className="mx-auto max-w-[1020px] py-8">
       <div className="flex flex-col items-center py-8 text-center ">
